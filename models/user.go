@@ -5,7 +5,7 @@ import (
 )
 
 type User struct {
-	Id         int `orm:"pk"`
+	Id         int 
 	Name       string
 	Paswd      string
 	CreateTime int64
