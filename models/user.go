@@ -5,7 +5,7 @@ import (
 )
 
 type User struct {
-	Id         int 
+	Id         int
 	Name       string
 	Paswd      string
 	CreateTime int64
@@ -23,26 +23,32 @@ func AddUser(user *User) bool {
 
 }
 
-func DeleteUser(user *User) bool {
+func (user *User) DeleteUser() bool {
 	o := orm.NewOrm()
 	_, err := o.Delete(user)
 	return err == nil
 }
 
-func GetUser(user *User) (*User, error) {
+func (user *User) GetUser(col string) (*User, error) {
 	o := orm.NewOrm()
-	err := o.Read(user)
+	err := o.Read(user, col)
 	return user, err
 
 }
 
-func UpdateUser(user *User) bool {
+func (user *User) UpdateUser() bool {
 	o := orm.NewOrm()
 	_, err := o.Update(user)
 	return err == nil
 
 }
 
+func (user *User) CheckUserExistByName() bool {
+
+	o := orm.NewOrm()
+	qs := o.QueryTable("user")
+	return qs.Filter("name", user.Name).Exist()
+}
 func GetUsers() ([]*User, error) {
 	var users []*User
 	o := orm.NewOrm()

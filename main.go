@@ -1,9 +1,9 @@
 package main
 
 import (
-	"apilogin/models"
-	_ "apilogin/routers"
-	"apilogin/util"
+	"basebeego/models"
+	_ "basebeego/routers"
+	"basebeego/util"
 
 	"github.com/astaxie/beego"
 )

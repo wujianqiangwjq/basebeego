@@ -1,7 +1,8 @@
 package controllers
 
 import (
-	"apilogin/models"
+	"basebeego/models"
+	"basebeego/util"
 	"encoding/json"
 	"strconv"
 	"time"
@@ -16,20 +17,44 @@ type UserController struct {
 func (user *UserController) Post() {
 	var params map[string]interface{}
 	json.Unmarshal(user.Ctx.Input.RequestBody, &params)
-	name := params["name"].(string)
-	passwd := params["passwd"].(string)
-	role := int(params["role"].(float64))
-	usermode := models.User{Name: name, Paswd: passwd, Role: role}
-	usermode.CreateTime = time.Now().Unix()
-	usermode.Status = 0
-	flag := models.AddUser(&usermode)
-	if flag {
-		user.Data["json"] = map[string]string{"status": "success"}
+	name, ok := params["name"]
+	if !ok {
+		user.Data["json"] = map[string]string{"status": "failed", "ermsg": "parameter is wrong"}
+		user.ServeJSON()
+		return
+	}
+	passwd, ok := params["passwd"]
+	if !ok {
+		user.Data["json"] = map[string]string{"status": "failed", "ermsg": "parameter is wrong"}
+		user.ServeJSON()
+		return
+	}
+	role := 1
+	role_tem, ok := params["role"]
+	if ok {
+		role = int(role_tem.(float64))
+	}
+
+	usermode := models.User{Name: name.(string)}
+	flag_exist := usermode.CheckUserExistByName()
+	if flag_exist {
+		user.Data["json"] = map[string]string{"status": "failed", "ermsg": "user exists"}
+		user.ServeJSON()
 
 	} else {
-		user.Data["json"] = map[string]string{"status": "failed"}
+		usermode.Role = role
+		usermode.Paswd = util.Md5Password(passwd.(string))
+		usermode.CreateTime = time.Now().Unix()
+		usermode.Status = 0
+		flag := models.AddUser(&usermode)
+		if flag {
+			user.Data["json"] = map[string]string{"status": "success"}
+
+		} else {
+			user.Data["json"] = map[string]string{"status": "failed"}
+		}
+		user.ServeJSON()
 	}
-	user.ServeJSON()
 
 }
 
@@ -44,7 +69,8 @@ func (user *UserController) Get() {
 
 func (user *UserController) Put() {
 	param, _ := strconv.Atoi(user.Ctx.Input.Param(":id"))
-	models.DeleteUser(&models.User{Id: param})
+	user_mode := models.User{Id: param}
+	user_mode.DeleteUser()
 	user.Data["json"] = map[string]string{"status": "success"}
 	user.ServeJSON()
 }

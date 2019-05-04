@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"apilogin/util"
+	"basebeego/util"
 
 	"github.com/astaxie/beego"
 )

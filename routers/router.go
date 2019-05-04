@@ -8,7 +8,7 @@
 package routers
 
 import (
-	"apilogin/controllers"
+	"basebeego/controllers"
 
 	"github.com/astaxie/beego"
 )
@@ -16,7 +16,7 @@ import (
 func init() {
 	ns := beego.NewNamespace("/v1",
 		beego.NSBefore(controllers.Auth))
-	ns.Router("/data/?:id", &controllers.UserController{})
+	ns.Router("/user/?:id", &controllers.UserController{})
 	ns.Router("/login", &controllers.LoginController{})
 	ns.Router("/reflash", &controllers.TokenController{})
 	beego.AddNamespace(ns)
