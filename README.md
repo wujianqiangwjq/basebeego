@@ -1,4 +1,5 @@
 一个完整的可用的beego架构，除了tests
+```
 User registration:
 request:
    POST  /v1/user
@@ -12,7 +13,8 @@ response:
         status: "success"  #  or failed
         
     }
-    
+```
+``` 
 User login:
    request:
         POST /v1/login
@@ -22,7 +24,8 @@ User login:
         }
     response:
         {
-            status: failed
+            status: failed,
+            "ermsg": username/password is wrong
         } 
    
         or 
@@ -30,6 +33,9 @@ User login:
             status: success,
             token: ...
         }
+
+```
+```
 User reflashToken:
     request:
         Post /v1/reflash
@@ -44,4 +50,4 @@ User reflashToken:
             token: ...
         }
         
-    
+``` 
