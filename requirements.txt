@@ -1,0 +1,4 @@
+github.com/gorilla/websocket
+github.com/astaxie/beego
+github.com/dgrijalva/jwt-go
+github.com/lib/pq
