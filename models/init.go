@@ -10,20 +10,20 @@ import (
 
 func Init() {
 
-	host := os.Getenv("MYSQL_HOST")
+	host := os.Getenv("MYSQLHOST")
 	if host == "" {
 		host = "localhost"
 	}
-	password := os.Getenv("MYSQL_PASSWD")
-	username := os.Getenv("MYSQL_USERNAME")
+	password := os.Getenv("MYSQLPASSWD")
+	username := os.Getenv("MYSQLUSERNAME")
 	if username == "" {
 		username = "root"
 	}
-	port := os.Getenv("MYSQL_PORT")
+	port := os.Getenv("MYSQLPORT")
 	if port == "" {
 		port = "3306"
 	}
-	dbname := os.Getenv("MYSQL_DBNAME")
+	dbname := os.Getenv("MYSQLDBNAME")
 	if dbname == "" {
 		dbname = "mysql"
 	}
