@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"basebeego/util"
+	"../util"
 
 	"github.com/astaxie/beego"
 )

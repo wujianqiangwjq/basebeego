@@ -1,9 +1,9 @@
 package main
 
 import (
-	"basebeego/models"
-	_ "basebeego/routers"
-	"basebeego/util"
+	"./models"
+	_ "./routers"
+	"./util"
 
 	"github.com/astaxie/beego"
 )

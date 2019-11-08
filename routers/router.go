@@ -8,7 +8,7 @@
 package routers
 
 import (
-	"basebeego/controllers"
+	"../controllers"
 
 	"github.com/astaxie/beego"
 )

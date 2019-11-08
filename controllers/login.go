@@ -1,9 +1,10 @@
 package controllers
 
 import (
-	"basebeego/models"
-	"basebeego/util"
 	"encoding/json"
+
+	"../models"
+	"../util"
 
 	"github.com/astaxie/beego"
 )
