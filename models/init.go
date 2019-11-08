@@ -29,7 +29,7 @@ func Init() {
 	}
 	data := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8", username, password, host, port, dbname)
 	orm.RegisterDriver("mysql", orm.DRMySQL)
-	orm.RegisterDataBase("default", "mysql", "root:password@tcp(localhost:3306)/wujq?charset=utf8")
+	orm.RegisterDataBase("default", "mysql", data)
 	orm.RegisterModel(new(User))
 	orm.RunSyncdb("default", false, false)
 
