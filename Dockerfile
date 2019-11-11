@@ -1,3 +1,4 @@
 FROM  centos
-copy basebeego /bin/basebeego
-ENTRYPOINT [/bin/basebeego]
+copy basebeego  /bin/
+RUN  chmod +x /bin/basebeego
+ENTRYPOINT ["/bin/basebeego"]
