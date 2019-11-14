@@ -12,6 +12,7 @@ func skip_auth(path string) bool {
 	skip_path := []string{
 		"/v1/login",
 		"/v1/user",
+		"/v1",
 	}
 	for _, value := range skip_path {
 		if (path == value) || (path == (value + "/")) {

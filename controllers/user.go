@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"encoding/json"
+	"io/ioutil"
+	"log"
 	"strconv"
 	"time"
 
@@ -16,8 +18,15 @@ type UserController struct {
 }
 
 func (user *UserController) Post() {
-	var params map[string]interface{}
-	json.Unmarshal(user.Ctx.Input.RequestBody, &params)
+	var params map[string]string
+	logdata, _ := ioutil.ReadAll(user.Ctx.Request.Body)
+	jsonerr := json.Unmarshal(logdata, &params)
+	if jsonerr != nil {
+		user.Data["json"] = map[string]string{"status": "failed", "ermsg": jsonerr.Error()}
+		user.ServeJSON()
+		return
+	}
+
 	name, ok := params["name"]
 	if !ok {
 		user.Data["json"] = map[string]string{"status": "failed", "ermsg": "parameter is wrong"}
@@ -33,10 +42,10 @@ func (user *UserController) Post() {
 	role := 1
 	role_tem, ok := params["role"]
 	if ok {
-		role = int(role_tem.(float64))
+		role, _ = strconv.Atoi(role_tem)
 	}
 
-	usermode := models.User{Name: name.(string)}
+	usermode := models.User{Name: name}
 	flag_exist := usermode.CheckUserExistByName()
 	if flag_exist {
 		user.Data["json"] = map[string]string{"status": "failed", "ermsg": "user exists"}
@@ -44,7 +53,7 @@ func (user *UserController) Post() {
 
 	} else {
 		usermode.Role = role
-		usermode.Paswd = util.Md5Password(passwd.(string))
+		usermode.Paswd = util.Md5Password(passwd)
 		usermode.CreateTime = time.Now().Unix()
 		usermode.Status = 0
 		flag := models.AddUser(&usermode)

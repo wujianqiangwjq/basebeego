@@ -19,5 +19,6 @@ func init() {
 	ns.Router("/user/?:id", &controllers.UserController{})
 	ns.Router("/login", &controllers.LoginController{})
 	ns.Router("/reflash", &controllers.TokenController{})
+	ns.Router("/", &controllers.LiveController{})
 	beego.AddNamespace(ns)
 }
