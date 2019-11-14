@@ -3,7 +3,6 @@ package controllers
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"strconv"
 	"time"
 
