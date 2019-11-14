@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"../util"
-
 	"github.com/astaxie/beego"
 )
 

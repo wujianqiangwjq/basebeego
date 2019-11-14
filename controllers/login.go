@@ -3,9 +3,10 @@ package controllers
 import (
 	"encoding/json"
 
+	"io/ioutil"
+
 	"../models"
 	"../util"
-
 	"github.com/astaxie/beego"
 )
 
@@ -15,7 +16,13 @@ type LoginController struct {
 
 func (login *LoginController) Post() {
 	var user map[string]string
-	json.Unmarshal(login.Ctx.Input.RequestBody, &user)
+	logdata, _ := ioutil.ReadAll(login.Ctx.Request.Body)
+	jsonerr := json.Unmarshal(logdata, &user)
+	if jsonerr != nil {
+		login.Data["json"] = map[string]string{"status": "failed", "ermsg": jsonerr.Error()}
+		login.ServeJSON()
+		return
+	}
 	username, ok := user["name"]
 	if !ok {
 		login.Data["json"] = map[string]string{"status": "failed", "ermsg": "can not get name parameter"}
